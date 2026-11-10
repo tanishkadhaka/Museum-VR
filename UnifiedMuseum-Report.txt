@@ -1,0 +1,1 @@
+Unified museum created. Entrance imported from VR. Eight display tables with replaceable artifact slots. Original scenes backed up externally. Single enabled build scene: UnifiedMuseum.

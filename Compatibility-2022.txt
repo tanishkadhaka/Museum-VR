@@ -1,0 +1,4 @@
+Unity 2022.3.62f3 compatibility validation
+Assets/Scenes/MuseumScene.unity: 734 objects, 0 missing script components
+Assets/Scenes/BasicScene.unity: 67 objects, 0 missing script components
+Assets/Scenes/SampleScene.unity: 681 objects, 0 missing script components
