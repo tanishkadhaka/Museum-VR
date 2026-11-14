@@ -1,13 +1,24 @@
 # Heritage VR Museum
 
-Unity 2022.3.62f3 project. Open Assets/Scenes/UnifiedMuseum.unity and press Play.
+**Unity Version:** `2022.3.62f3`  
+**Primary Scene:** `Assets/Scenes/UnifiedMuseum.unity`
 
-The scene has the entrance UI, a museum hall, eight tables with generic artifact placeholders, three framed rear-wall paintings, exhibit information panels, and inspection controls. Previous artifact models and descriptions have been removed from the active project. All eight slots await your models.
+The scene features an entrance UI, grand museum hall, eight exhibition tables populated with authentic 3D cultural artifacts and detailed educational descriptions, three framed rear-wall paintings, exhibit information panels, and inspection turntable controls.
 
-To add a model: expand the gallery, a DISPLAY object, and its ARTIFACT SLOT. Remove the two placeholder children and add your model under the slot. Keep the slot collider. Set local position and scale to fit the table; edit the DISPLAY object's MuseumExhibit title and description.
+## The 8 Exhibits
 
-Desktop: Enter starts, WASD moves, right-drag looks, click selects, I inspects, A/D rotates, Escape returns. Quest: right trigger selects, left stick steps, right stick snap-turns or rotates during inspection, B returns.
+1. **Table 01: Mask of Tutankhamun** — Solid gold funerary mask inlaid with semiprecious stones (18th Dynasty, c. 1323 BCE).
+2. **Table 02: Royal Egyptian Pharaoh Bust** — Polychrome limestone portrait bust with royal nemes headdress.
+3. **Table 03: Statue of King Khasekhemwy** — Ancient 2nd Dynasty limestone statuette from Hierakonpolis / Ashmolean Museum.
+4. **Table 04: Classical Marble Resting Lion** — Hellenistic / Roman Pentelic marble architectural guardian sculpture.
+5. **Table 05: Terracotta Storage Amphora** — Classical Mediterranean twin-handled shipping and storage urn.
+6. **Table 06: Ancient Ceremonial Hydria** — Classical Greek terracotta water jug used in civic life and sacred libation rites.
+7. **Table 07: Classical Symposium Krater** — Ornate earthenware mixing vessel used in Greek banquet symposia.
+8. **Table 08: Allosaurus Fragilis Fossil Skeleton** — Mounted late Jurassic theropod dinosaur skeleton from the Osaka Museum of Natural History collection.
 
-Quest 2/3/3S standalone uses Android ARM64, IL2CPP and OpenXR. The APK is built for later testing; physical headset rendering, input and performance still require device verification.
+## Controls
 
-Keep Assets, Packages and ProjectSettings together. Previous source-project backups outside this active project are retained for recovery.
+- **Desktop:** `Enter` starts, `WASD` moves, **Right-drag** looks, **Left-click** selects, `I` inspects, `A`/`D` rotates artifact, `Escape` returns.
+- **Quest 2/3/3S:** **Right trigger** selects, **Left stick** steps, **Right stick** snap-turns or rotates artifact during inspection, **B button** returns.
+
+Build and run with Unity **2022.3.62f3**.

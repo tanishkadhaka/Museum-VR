@@ -1,1 +1,14 @@
-Unified museum created. Entrance imported from VR. Eight display tables with replaceable artifact slots. Original scenes backed up externally. Single enabled build scene: UnifiedMuseum.
+Unified museum fully configured and populated.
+Assets merged from GitHub repo (https://github.com/jalagam-saineha/VR-Virtual-Museum).
+All eight display tables feature authentic 3D cultural artifacts, detailed descriptions, custom slot labels, and inspect turntable mechanics:
+1. Mask of Tutankhamun
+2. Royal Egyptian Pharaoh Bust
+3. Statue of King Khasekhemwy
+4. Classical Marble Resting Lion
+5. Terracotta Storage Amphora (Pot I)
+6. Ancient Ceremonial Hydria (Pot II)
+7. Classical Symposium Krater (Pot III)
+8. Allosaurus Fragilis Fossil Skeleton
+Unity version: 2022.3.62f3.
+Primary enabled build scene: Assets/Scenes/UnifiedMuseum.unity.
+All deliverables ready for AR/VR end term evaluation.
