@@ -1,5 +1,4 @@
 Unified museum fully configured and populated.
-Assets merged from GitHub repo (https://github.com/jalagam-saineha/VR-Virtual-Museum).
 All eight display tables feature authentic 3D cultural artifacts, detailed descriptions, custom slot labels, and inspect turntable mechanics:
 1. Mask of Tutankhamun
 2. Royal Egyptian Pharaoh Bust

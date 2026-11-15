@@ -1,0 +1,6 @@
+Updated APK: eight artifacts, three rear-wall paintings, six Egyptian-inspired side-wall paintings.
+Succeeded
+Errors: 0
+Size: 850182573 bytes
+SHA256: 51d0d46fe64e2261444c6a8a481693d1019f0ed011b808f1ae8113ea84a7024e
+Verified all six side-wall painting titles in packaged scene. Physical headset testing pending.

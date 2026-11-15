@@ -14,6 +14,8 @@ public class MuseumExperience : MonoBehaviour {
     public TMPro.TMP_Text exhibitTitle,exhibitDescription;
     public MuseumExhibit selected;
     Vector3 previousPosition;
+    Quaternion previousRigRotation, previousHeadRotation, artifactRestRotation;
+    float previousYaw, previousPitch;
     public GameObject exhibitPrompt;
     public LineRenderer ray;
     public Transform reticle;
@@ -54,7 +56,7 @@ public class MuseumExperience : MonoBehaviour {
         }
     }
     public void Go(int destination) {
-        if(exhibitPrompt)exhibitPrompt.SetActive(true);room=destination; inspecting=false; head.localRotation=Quaternion.identity;
+        EndInspection();if(exhibitPrompt)exhibitPrompt.SetActive(true);room=destination; inspecting=false; head.localRotation=Quaternion.identity;
         rig.position=destination==0?new Vector3(-60,0,-11):destination==1?new Vector3(0,0,-2):new Vector3(0,0,10);
         rig.rotation=Quaternion.identity; yaw=pitch=0;
         menu.gameObject.SetActive(destination==0); info.gameObject.SetActive(false); comfort.gameObject.SetActive(false);
@@ -65,24 +67,51 @@ public class MuseumExperience : MonoBehaviour {
         switch(action) {
             case "start": Go(1); break;
             case "tour": Go(1);if(selected)ShowExhibit(selected);break;
-            case "comfort": comfort.gameObject.SetActive(!comfort.gameObject.activeSelf); break;
+            case "comfort": bool show=!comfort.gameObject.activeSelf;comfort.gameObject.SetActive(show);menu.gameObject.SetActive(!show&&room==0);if(show){comfort.position=menu.position-menu.forward*.1f;comfort.rotation=menu.rotation;}break;
             case "examine": if(selected)ShowExhibit(selected);break;
             case "inspect":
                 if(!selected)break;
-                previousPosition=rig.position;inspecting=true;info.gameObject.SetActive(false);
+                if(inspecting)break;previousPosition=rig.position;previousRigRotation=rig.rotation;previousHeadRotation=head.localRotation;previousYaw=yaw;previousPitch=pitch;artifactRestRotation=statue.localRotation;inspecting=true;info.gameObject.SetActive(false);
                 rig.position=selected.viewingPosition;rig.rotation=Quaternion.identity;yaw=pitch=0;head.localRotation=Quaternion.identity;break;
-            case "back": pitch=0;head.localRotation=Quaternion.identity;if(inspecting)rig.position=previousPosition;inspecting=false;info.gameObject.SetActive(false);break;
+            case "back": EndInspection();info.gameObject.SetActive(false);break;
             case "ceramics": Go(2); break;
             case "gallery": Go(1); break;
             case "home": Go(0); break;
             case "teleport": rig.position=new Vector3(0,0,10);break;
         }
     }
+    void EndInspection(){
+        if(!inspecting)return;
+        if(statue)statue.localRotation=artifactRestRotation;
+        rig.position=previousPosition;rig.rotation=previousRigRotation;
+        if(!UsingXR)head.localRotation=previousHeadRotation;
+        yaw=previousYaw;pitch=previousPitch;inspecting=false;
+    }
     public void ShowExhibit(MuseumExhibit exhibit){
-        selected=exhibit;statue=exhibit.artifact;inspecting=false;
-        exhibitTitle.text=exhibit.title;exhibitTitle.fontSize=Mathf.Min(2.7f,32f/Mathf.Max(1,exhibit.title.Length));exhibitDescription.text=exhibit.description;
-        var forward=Vector3.ProjectOnPlane(head.forward,Vector3.up).normalized;if(forward.sqrMagnitude<.1f)forward=rig.forward;var rotation=Quaternion.LookRotation(forward,Vector3.up);info.position=head.position+forward*2.6f+rotation*Vector3.right*.9f;info.rotation=rotation;
-        info.gameObject.SetActive(true);
+        EndInspection();selected=exhibit;statue=exhibit.artifact;
+        exhibitTitle.text=exhibit.title;exhibitDescription.text=exhibit.description;
+        PositionInformation();info.gameObject.SetActive(true);if(inputHint)inputHint.gameObject.SetActive(false);exhibitTitle.ForceMeshUpdate(true,true);exhibitDescription.ForceMeshUpdate(true,true);
+    }
+    void PositionInformation(){
+        var forward=Vector3.ProjectOnPlane(head.forward,Vector3.up).normalized;
+        if(forward.sqrMagnitude<.1f)forward=rig.forward;
+        var rightward=Vector3.Cross(Vector3.up,forward);
+        float side=Vector3.Dot(-head.position,rightward)>=0?1:-1;
+        Vector2[] candidates={new Vector2(0,1.65f),new Vector2(0,1.5f),new Vector2(side*.15f,1.4f)};
+        Physics.SyncTransforms();
+        foreach(var offset in candidates){
+            var position=head.position+forward*offset.y+rightward*offset.x;
+            position.y=Mathf.Max(1.2f,head.position.y-.1f);
+            position.x=Mathf.Clamp(position.x,-9.5f,9.5f);position.z=Mathf.Clamp(position.z,-1.3f,20.6f);
+            var facing=Quaternion.LookRotation(position-head.position,Vector3.up);
+            bool blocked=false;
+            foreach(var c in Physics.OverlapBox(position,new Vector3(1.02f,.75f,.04f),facing,~0,QueryTriggerInteraction.Ignore)){
+                if(c.transform.IsChildOf(info)||c.transform.IsChildOf(rig)||c.GetComponentInParent<MuseumAction>())continue;
+                blocked=true;break;
+            }
+            info.SetPositionAndRotation(position,facing);
+            if(!blocked)return;
+        }
     }
     public bool SelectRay(Ray pointer) {
         Physics.SyncTransforms();
@@ -95,7 +124,7 @@ public class MuseumExperience : MonoBehaviour {
     void Update() {
         bool xr=UsingXR;
         if(desktopMask&&desktopMask.activeSelf==xr)desktopMask.SetActive(!xr);
-        if(inputHint){string hint=xr?"TRIGGER  Select   •   RIGHT STICK  Turn / rotate   •   LEFT STICK  Step   •   B  Back":"WASD  Move   •   Right-drag  Look   •   Click  Select   •   ESC  Back";if(inputHint.text!=hint)inputHint.text=hint;}
+        if(inputHint){inputHint.gameObject.SetActive(!info.gameObject.activeSelf&&!comfort.gameObject.activeSelf);string hint=xr?"TRIGGER  Select   •   RIGHT STICK  Turn / rotate   •   LEFT STICK  Step   •   B  Back":"WASD  Move   •   Right-drag  Look   •   Click  Select   •   ESC  Back";if(inputHint.text!=hint)inputHint.text=hint;}
         view.stereoTargetEye=xr?StereoTargetEyeMask.Both:StereoTargetEyeMask.None;
         if(xr) {
             if(!trackingConfigured){SubsystemManager.GetInstances(inputSubsystems);foreach(var subsystem in inputSubsystems)subsystem.TrySetTrackingOriginMode(TrackingOriginModeFlags.Floor);trackingConfigured=inputSubsystems.Count>0;}
@@ -107,13 +136,16 @@ public class MuseumExperience : MonoBehaviour {
             head.localPosition=new Vector3(0,1.65f,0);
             if((Mouse.current!=null&&Mouse.current.rightButton.isPressed)) { yaw+=(Mouse.current.delta.x.ReadValue()*.05f)*2; pitch=Mathf.Clamp(pitch-(Mouse.current.delta.y.ReadValue()*.05f)*2,-65,65); rig.rotation=Quaternion.Euler(0,yaw,0); head.localRotation=Quaternion.Euler(pitch,0,0); }
             var move=new Vector3(DesktopMove.x,0,DesktopMove.y);
-            if(room!=0 && !inspecting){var movement=rig.TransformDirection(Vector3.ClampMagnitude(move,1))*Time.deltaTime*2;var body=rig.GetComponent<CharacterController>();if(body)body.Move(movement);else rig.position+=movement;}
+            if(room!=0 && !inspecting){if(move.sqrMagnitude>.01f&&info.gameObject.activeSelf)info.gameObject.SetActive(false);var movement=rig.TransformDirection(Vector3.ClampMagnitude(move,1))*Time.deltaTime*2;var body=rig.GetComponent<CharacterController>();if(body)body.Move(movement);else rig.position+=movement;}
         }
         bool trigger=xr && right.TryGetFeatureValue(CommonUsages.triggerButton,out bool t)&&t;
         bool secondary=xr && right.TryGetFeatureValue(CommonUsages.secondaryButton,out bool s)&&s;
         if((secondary&&!lastSecondary)||(Keyboard.current!=null&&Keyboard.current.escapeKey.wasPressedThisFrame)) { if(inspecting||info.gameObject.activeSelf)Act("back");else Go(0); }
         if((Keyboard.current!=null&&Keyboard.current.enterKey.wasPressedThisFrame)) { if(room==0)Go(1);else Act("examine"); }
-        if((Keyboard.current!=null&&Keyboard.current.iKey.wasPressedThisFrame)&&room==1) Act("inspect");
+        if((Keyboard.current!=null&&Keyboard.current.iKey.wasPressedThisFrame)&&room>0){
+            if(!info.gameObject.activeSelf&&!inspecting){MuseumExhibit nearest=null;float distance=float.MaxValue;foreach(var exhibit in gallery.GetComponentsInChildren<MuseumExhibit>()){float d=(exhibit.viewingPosition-rig.position).sqrMagnitude;if(d<distance){distance=d;nearest=exhibit;}}if(nearest){selected=nearest;statue=nearest.artifact;}}
+            Act("inspect");
+        }
         if((Keyboard.current!=null&&Keyboard.current.gKey.wasPressedThisFrame)) Go(room==2?1:2);
         if(inspecting) {
             float spin=DesktopMove.x;

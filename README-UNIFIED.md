@@ -1,24 +1,13 @@
 # Heritage VR Museum
 
-**Unity Version:** `2022.3.62f3`  
-**Primary Scene:** `Assets/Scenes/UnifiedMuseum.unity`
+Open this project in Unity 2022.3.62f3 and load Assets/Scenes/UnifiedMuseum.unity. Press Play and select Start.
 
-The scene features an entrance UI, grand museum hall, eight exhibition tables populated with authentic 3D cultural artifacts and detailed educational descriptions, three framed rear-wall paintings, exhibit information panels, and inspection turntable controls.
+The museum includes the entrance menu, eight installed artifacts, framed rear-wall paintings, table plaques, exhibit information and centered 3D inspection. The imported models are fitted to their table surfaces with geometry-based centering and selection boxes. Exiting inspection restores the original presentation.
 
-## The 8 Exhibits
+Desktop: WASD moves; right-drag looks; click selects; I inspects the nearest exhibit; A/D rotates during inspection; Escape returns. Quest: right trigger selects, left stick forward steps, right stick snap-turns or rotates during inspection, B returns.
 
-1. **Table 01: Mask of Tutankhamun** — Solid gold funerary mask inlaid with semiprecious stones (18th Dynasty, c. 1323 BCE).
-2. **Table 02: Royal Egyptian Pharaoh Bust** — Polychrome limestone portrait bust with royal nemes headdress.
-3. **Table 03: Statue of King Khasekhemwy** — Ancient 2nd Dynasty limestone statuette from Hierakonpolis / Ashmolean Museum.
-4. **Table 04: Classical Marble Resting Lion** — Hellenistic / Roman Pentelic marble architectural guardian sculpture.
-5. **Table 05: Terracotta Storage Amphora** — Classical Mediterranean twin-handled shipping and storage urn.
-6. **Table 06: Ancient Ceremonial Hydria** — Classical Greek terracotta water jug used in civic life and sacred libation rites.
-7. **Table 07: Classical Symposium Krater** — Ornate earthenware mixing vessel used in Greek banquet symposia.
-8. **Table 08: Allosaurus Fragilis Fossil Skeleton** — Mounted late Jurassic theropod dinosaur skeleton from the Osaka Museum of Natural History collection.
+The information cards use bounded, wrapped text. Descriptions describe the visible models; precise dates, provenance and archaeological identification remain unverified for the commercial/scan assets. Vessel labels reflect their actual silhouettes rather than unsupported hydria/krater identifications.
 
-## Controls
+To reimport and align the eight exhibits, use Museum > 12 Reimport and Align 8 Artifacts, or Museum > 13 Fix Artifact Alignment and Text. Alignment is explicit: opening the editor no longer silently replaces models. The model paths, presentation orientation and text are in Assets/Editor/MuseumArtifactSetup.cs. Geometry fitting, label formatting and card layout are in MuseumArtifactAlignment.cs.
 
-- **Desktop:** `Enter` starts, `WASD` moves, **Right-drag** looks, **Left-click** selects, `I` inspects, `A`/`D` rotates artifact, `Escape` returns.
-- **Quest 2/3/3S:** **Right trigger** selects, **Left stick** steps, **Right stick** snap-turns or rotates artifact during inspection, **B button** returns.
-
-Build and run with Unity **2022.3.62f3**.
+The Android APK targets Quest 2/3/3S standalone with ARM64, IL2CPP and OpenXR. Physical headset visual, controller and performance testing remains necessary.

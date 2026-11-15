@@ -5,25 +5,8 @@ using HeritageVR;
 using TMPro;
 using System.Linq;
 
-[InitializeOnLoad]
 public static class MuseumArtifactSetup {
     const string ScenePath = "Assets/Scenes/UnifiedMuseum.unity";
-
-    static MuseumArtifactSetup() {
-        EditorApplication.delayCall += AutoPopulateIfPlaceholders;
-    }
-
-    public static void AutoPopulateIfPlaceholders() {
-        if (EditorApplication.isPlayingOrWillChangePlaymode) return;
-        var scene = EditorSceneManager.GetActiveScene();
-        if (scene.path == ScenePath) {
-            var exhibits = Object.FindObjectsOfType<MuseumExhibit>();
-            if (exhibits.Any(e => e.title != null && (e.title.StartsWith("ARTIFACT SLOT") || e.title.Contains("RESERVED")))) {
-                Debug.Log("[MuseumArtifactSetup] Initializing and populating all 8 museum artifacts...");
-                Populate();
-            }
-        }
-    }
 
     public struct ArtifactDef {
         public string assetPath;
@@ -41,84 +24,86 @@ public static class MuseumArtifactSetup {
             assetPath = "Assets/ThreeDragons/Tutankhamun/Prefabs/Tut_mask.prefab",
             shortName = "TUTANKHAMUN MASK",
             title = "Mask of Tutankhamun",
-            description = "The gold funerary mask of Pharaoh Tutankhamun (18th Dynasty, c. 1323 BCE), discovered in tomb KV62 in the Valley of the Kings by Howard Carter in 1922.\n\nCrafted from over 10 kilograms of solid gold inlaid with lapis lazuli, turquoise, carnelian, and quartz. The nemes headdress bears the protective cobra (Wadjet) and vulture (Nekhbet), symbolizing sovereign divine authority over Upper and Lower Egypt in the afterlife.",
-            localPosition = new Vector3(0, 0f, 0),
-            localEulerAngles = new Vector3(0, 0, 0),
-            localScale = new Vector3(1f, 1f, 1f)
+            description = "A digital study of Tutankhamun’s funerary mask. The striped headdress and royal emblems frame the face.\n\nLook closely at the gold-and-blue decoration and the symmetry of the portrait.",
+            localPosition = Vector3.zero,
+            localEulerAngles = new Vector3(0, 180, 0),
+            localScale = Vector3.one
         },
         // Table 02
         new ArtifactDef {
             assetPath = "Assets/AK Studio Art/Egypt Pharoah Bust/Prefabs/Egypt Pharoah Bust.prefab",
             shortName = "ROYAL PHARAOH BUST",
             title = "Royal Egyptian Pharaoh Bust",
-            description = "A royal portrait bust depicting an ancient Egyptian pharaoh in ceremonial splendor (New Kingdom, c. 14th Century BCE).\n\nCarved with realistic naturalism, wearing the striated royal nemes headcloth and divine ceremonial beard. Illustrates the monumental portraiture and divine kingship iconography characteristic of Egypt's imperial golden age.",
-            localPosition = new Vector3(0, 0f, 0),
-            localEulerAngles = new Vector3(0, 0, 0),
-            localScale = new Vector3(0.25f, 0.25f, 0.25f)
+            description = "A digital study of an Egyptian royal portrait bust, with a striped headdress and ceremonial beard.\n\nExplore the face and headcloth in 3D. The identity and date of this model have not been confirmed.",
+            localPosition = Vector3.zero,
+            localEulerAngles = new Vector3(0, 180, 0),
+            localScale = Vector3.one
         },
         // Table 03
         new ArtifactDef {
             assetPath = "Assets/Models/MuseumObjects/egyptian_pharoah_khasekhemwy_-_oxford_ashmoleon.glb",
             shortName = "KHASEKHEMWY STATUE",
             title = "Statue of King Khasekhemwy",
-            description = "One of the earliest surviving monumental royal stone sculptures from ancient Egypt (Second Dynasty, c. 2686 BCE), excavated at Hierakonpolis and conserved at the Ashmolean Museum in Oxford.\n\nCarved from indurated limestone, depicting King Khasekhemwy seated upon a block throne wearing the White Crown of Upper Egypt and the ceremonial Sed festival jubilee robe.",
-            localPosition = new Vector3(0, 0f, 0),
-            localEulerAngles = new Vector3(-90, -90, -30),
-            localScale = new Vector3(1.15f, 1.15f, 1.15f)
+            description = "A digital study of the seated statue identified as King Khasekhemwy. The tall crown, compact throne and long robe define its silhouette.\n\nRotate the model to compare the front, sides and throne.",
+            localPosition = Vector3.zero,
+            localEulerAngles = new Vector3(-90, 150, 0),
+            localScale = Vector3.one
         },
         // Table 04
         new ArtifactDef {
             assetPath = "Assets/Models/MuseumObjects/marble_statue_of_a_lion.glb",
             shortName = "MARBLE LION STATUE",
-            title = "Classical Marble Resting Lion",
-            description = "A monumental resting feline guardian sculpture carved from crystalline Pentelic marble (Hellenistic / Classical Antiquity, c. 4th-2nd Century BCE).\n\nIn classical Greco-Roman architecture, sculpted lions guarded royal tomb precincts, sacred temples, and public monuments, standing as eternal symbols of vigilance, valor, and heroic divine protection.",
-            localPosition = new Vector3(0, 0f, 0),
-            localEulerAngles = new Vector3(-54.3f, -38.9f, -103.3f),
-            localScale = new Vector3(0.12f, 0.12f, 0.12f)
+            title = "Marble Lion Sculpture",
+            description = "A digital study of a lion sculpture.\n\nNotice the mane, open mouth, extended paws and weathered surface. Rotate the model to explore the crouching pose. The model’s exact provenance is unconfirmed.",
+            localPosition = Vector3.zero,
+            localEulerAngles = new Vector3(-90, 150, 0),
+            localScale = Vector3.one
         },
         // Table 05
         new ArtifactDef {
             assetPath = "Assets/Ancient Pots/URP & Built-In/URP/Prefabs/pot_1.prefab",
-            shortName = "STORAGE AMPHORA",
-            title = "Terracotta Storage Amphora",
-            description = "A classical Mediterranean twin-handled pottery vessel (c. 5th Century BCE) wheel-thrown from coarse terracotta clay and finished with an authentic slip patina.\n\nFeaturing an elongated body, fluted neck, and vertical strap handles, amphorae served as the primary bulk shipping containers for transporting and aging vintage wines, cold-pressed olive oils, and grains across Aegean maritime trade routes.",
-            localPosition = new Vector3(0, 0f, 0),
+            shortName = "STORAGE VESSEL",
+            title = "Two-handled Storage Vessel",
+            description = "A digital study of a two-handled pottery vessel with a narrow neck, rounded body and small foot.\n\nCompare its proportions with the other ceramics. The model’s exact origin and date are unconfirmed.",
+            localPosition = Vector3.zero,
             localEulerAngles = new Vector3(0, 0, 0),
-            localScale = new Vector3(0.85f, 0.85f, 0.85f)
+            localScale = Vector3.one
         },
         // Table 06
         new ArtifactDef {
             assetPath = "Assets/Ancient Pots/URP & Built-In/URP/Prefabs/pot_2.prefab",
-            shortName = "CEREMONIAL HYDRIA",
-            title = "Ancient Ceremonial Hydria",
-            description = "A ceremonial Greek terracotta water pitcher (c. 4th Century BCE) characterized by a bulbous vessel body, flared pouring rim, and dual side lifting handles complemented by a central pouring handle.\n\nEssential to civic life and sanctuary rituals, hydriae were gathered at public fountain houses and dedicated at sacred shrines during ritual cleansing and libation ceremonies.",
-            localPosition = new Vector3(0, 0f, 0),
+            shortName = "RIBBED STORAGE JAR",
+            title = "Ribbed Storage Jar",
+            description = "A digital study of an oval storage jar with a ribbed surface and a supporting metal stand.\n\nExplore the bands, surface texture and profile. The model’s original function, origin and date are unconfirmed.",
+            localPosition = Vector3.zero,
             localEulerAngles = new Vector3(0, 0, 0),
-            localScale = new Vector3(0.85f, 0.85f, 0.85f)
+            localScale = Vector3.one
         },
         // Table 07
         new ArtifactDef {
             assetPath = "Assets/Ancient Pots/URP & Built-In/URP/Prefabs/pot_3.prefab",
-            shortName = "SYMPOSIUM KRATER",
-            title = "Classical Symposium Krater",
-            description = "A monumental earthenware mixing bowl (c. 6th-5th Century BCE) adorned with horizontal band motifs and a heavy fluted pedestal base.\n\nThe centerpiece of the ancient Greek symposium (social and philosophical banquet), the krater was utilized to dilute potent unfermented vintage wine with fresh spring water, honey, and aromatic herbs before serving participants.",
-            localPosition = new Vector3(0, 0f, 0),
+            shortName = "TALL CERAMIC VESSEL",
+            title = "Tall Ceramic Vessel",
+            description = "A digital study of a tall, narrow ceramic vessel with a small mouth and bands around the body.\n\nCompare the shoulder, neck and base with the wider jars nearby. The model’s exact attribution is unconfirmed.",
+            localPosition = Vector3.zero,
             localEulerAngles = new Vector3(0, 0, 0),
-            localScale = new Vector3(0.85f, 0.85f, 0.85f)
+            localScale = Vector3.one
         },
         // Table 08
         new ArtifactDef {
             assetPath = "Assets/Models/MuseumObjects/900868a0aa0b47e58571f5f5ae20094c.glb",
             shortName = "ALLOSAURUS FOSSIL",
-            title = "Allosaurus Fragilis Fossil Skeleton",
-            description = "A complete mounted articulated fossil skeleton of Allosaurus fragilis, the apex theropod dinosaur of the Late Jurassic Morrison Formation (approx. 155-145 Million BCE).\n\nDigitized from the Osaka Museum of Natural History collection. Features a lightweight kinetic skull, recurved serrated teeth, and lethal three-clawed raptorial forelimbs used to hunt massive sauropod dinosaurs.",
-            localPosition = new Vector3(0, 0.5f, 0),
-            localEulerAngles = new Vector3(-90, 0, 0),
-            localScale = new Vector3(0.18f, 0.18f, 0.18f)
+            title = "Allosaurus Skeleton",
+            description = "A digital study of a mounted skeleton identified as Allosaurus.\n\nExplore the skull, rib cage, tail and hind limbs. The skeleton is shown at reduced scale to fit this tabletop display.",
+            localPosition = Vector3.zero,
+            localEulerAngles = new Vector3(-90, 90, 0),
+            localScale = Vector3.one
         }
     };
 
-    [MenuItem("Museum/12 Populate 8 Artifacts")]
+    [MenuItem("Museum/12 Reimport and Align 8 Artifacts")]
+    public static void PopulateAndAlign(){MuseumArtifactAlignment.Apply();}
+
     public static void Populate() {
         if (EditorApplication.isPlaying) {
             Debug.LogError("Stop playback before configuring artifacts.");
@@ -143,6 +128,8 @@ public static class MuseumArtifactSetup {
             Debug.LogError($"Expected 8 display tables, found {exhibits.Length}");
             return;
         }
+
+        foreach(var def in Artifacts) if(!AssetDatabase.LoadAssetAtPath<GameObject>(def.assetPath)) throw new System.Exception("Missing artifact: "+def.assetPath);
 
         for (int i = 0; i < exhibits.Length; i++) {
             var exhibit = exhibits[i];

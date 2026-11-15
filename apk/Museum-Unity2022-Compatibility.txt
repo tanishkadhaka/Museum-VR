@@ -1,0 +1,9 @@
+Unity 2022.3.62f3 compatibility validation
+Assets/Scenes/MuseumScene.unity: 734 objects, 0 missing script components
+Assets/Scenes/BasicScene.unity: 67 objects, 0 missing script components
+Assets/Scenes/SampleScene.unity: 681 objects, 0 missing script components
+
+Converted from Unity 6000.3.21f1 to 2022.3.62f3. URP 14, XRI 3.5.0, XR Hands 1.8.1. Unity 6-only platform packages removed.
+Compilation and scene loading passed; rendering, Play Mode and physical headset operation have not been validated.
+Original Packages and ProjectSettings backed up at /Users/aasthathakur/Documents/Codex/2026-10-28/rea/work/museum-downgrade-backup.
+ 

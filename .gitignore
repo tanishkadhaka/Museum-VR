@@ -25,6 +25,8 @@
 # Build output
 [Bb]uild/
 [Bb]uilds/
+*.apk
+
 
 # OS files
 .DS_Store
