@@ -1,5 +1,5 @@
 Quest 2 / Quest 3 / Quest 3S standalone target
 Unity 2022.3.62f3 • Android ARM64 • IL2CPP • OpenXR • OpenGLES3 • single-pass stereo • 4x MSAA • ASTC textures
-Total scene triangles including inactive objects: 1489844
+Total scene triangles including inactive objects: 1489892
 OpenXR blocking issues: 0
 Physical headset testing is still required; a successful APK build is not a device performance test.

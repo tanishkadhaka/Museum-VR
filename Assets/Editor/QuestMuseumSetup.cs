@@ -21,7 +21,7 @@ using System.IO;
 public static class QuestMuseumSetup {
  const string Scene="Assets/Scenes/UnifiedMuseum.unity";
  const string Root="Assets/HeritageVR/";
- const string Output="/Users/aasthathakur/Documents/Codex/2026-10-28/rea/outputs/";
+ static string Output=>System.IO.Path.GetFullPath("apk")+"/";
  public static void Prepare(){Paintings();Configure();}
  public static void BuildFinal(){Paintings();BuildAPK();}
  static GameObject Box(string name,Vector3 pos,Vector3 scale,Material mat,Transform parent){var go=GameObject.CreatePrimitive(PrimitiveType.Cube);go.name=name;go.transform.SetParent(parent,false);go.transform.localPosition=pos;go.transform.localScale=scale;go.GetComponent<Renderer>().sharedMaterial=mat;Object.DestroyImmediate(go.GetComponent<Collider>());return go;}

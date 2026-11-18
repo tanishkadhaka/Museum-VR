@@ -11,3 +11,9 @@ The information cards use bounded, wrapped text. Descriptions describe the visib
 To reimport and align the eight exhibits, use Museum > 12 Reimport and Align 8 Artifacts, or Museum > 13 Fix Artifact Alignment and Text. Alignment is explicit: opening the editor no longer silently replaces models. The model paths, presentation orientation and text are in Assets/Editor/MuseumArtifactSetup.cs. Geometry fitting, label formatting and card layout are in MuseumArtifactAlignment.cs.
 
 The Android APK targets Quest 2/3/3S standalone with ARM64, IL2CPP and OpenXR. Physical headset visual, controller and performance testing remains necessary.
+
+## Exhibit audio guide
+Opening an exhibit starts its narration. History, Look Closer and Why It Matters advance with the matching audio. Previous/Next switches text and audio together; Pause/Resume preserves the playback position. Closing or hiding the card stops narration. See apk/Stories-and-Audio.md.
+
+## Visiting exhibits and paintings
+A distant click travels to the viewing spot. A nearby click opens the description. Walking remains available. Artifact narration starts with the description, never on the initial travel click. All nine paintings support travel only, with no description panels. See apk/Viewing-and-Descriptions.md.

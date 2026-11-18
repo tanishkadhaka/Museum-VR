@@ -1,0 +1,4 @@
+PASS: eight artifact and nine painting ray interactions.
+First distant click travels to viewing spot with no panel or audio. Artifacts: second click opens the correct description. Paintings: repeated clicks only travel, never opening a description or audio. Walking to artifact spots opens description on first nearby click. CharacterController movement preserved.
+Artifact narration begins only when the description opens.
+Physical Quest 3S testing remains pending.

@@ -1,0 +1,3 @@
+PASS all eight exhibits: automatic playback, three matching text/audio sections, complete text bounds, pause/resume, paused page navigation, close stops audio.
+PASS automatic advance follows actual clip completion.
+Physical Quest 3S testing pending.
